@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ColorBox from './ColorBox'
+import Navbar from './Navbar'
 import '../style/Palette.css'
 
- const Palette = ({palette}) => {
-    const colorBoxes = palette.colors.map(color => (
-        <ColorBox key={color.color} background={color.color} name={color.name}/>
+
+
+ const Palette = ({palette : {colors, paletteName, emoji}}) => {
+    const [format,setFormat] = useState('hex');
+    const [level,setLevel] = useState(500);
+    const colorBoxes = colors[level].map(color => (
+        <ColorBox key={color.id} background={color[format]} name={color.name}/>
     ))
     return (
         <div className='Palette'>
-            {/* navbar */}
-            <div className="Palette-colors">
-            {colorBoxes}
-            </div>
-            {/* footer */}
+           
+            <Navbar level={level} setLevel={setLevel} format={format} setFormat={setFormat}/>
+            <div className="Palette-colors"> {colorBoxes}</div>
+            <footer className='Palette-footer'>
+                {paletteName}
+                <span className='emoji'>{emoji}</span>
+            </footer>
         </div>
     )
 }
