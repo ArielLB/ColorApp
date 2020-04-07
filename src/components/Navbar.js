@@ -1,28 +1,33 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import 'rc-slider/assets/index.css'
 import Slider from 'rc-slider'
-import '../style/Navbar.css'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 import { IconButton } from '@material-ui/core'
+import {withStyles} from '@material-ui/styles'
+import styles from '../style/NavbarStyles'
+import 'rc-slider/assets/index.css'
 
-const Navbar = ({level, setLevel, format, setFormat}) => {
+
+
+const Navbar = ({level, setLevel, format, setFormat, hideLevel,classes}) => {
     const [openSnackbar,setOpenSnackbar] = useState(false);
     return (
-        <header className='Navbar'>
-            <div className="logo">
+        <header className={classes.Navbar}>
+            <div className={classes.logo}>
                 <Link to="/">ColorPicker</Link>
             </div>
-            <div className="slider-container">
-                <span>Level: {level}</span>
-                <div className="slider">
-                    <Slider defaultValue={level} min={100} max={900} step={100} onAfterChange={level=>setLevel(level)}/>
-                </div>
-            </div>
-            <div className="select-container">
+            {!hideLevel && (
+                  <div>
+                  <span>Level: {level}</span>
+                  <div className={classes.slider}>
+                      <Slider defaultValue={level} min={100} max={900} step={100} onAfterChange={level=>setLevel(level)}/>
+                  </div>
+              </div>
+            )}
+            <div className={classes.selectContainer}>
                 <Select value={format} onChange={e=>{
                                 setFormat(e.target.value);
                                 setOpenSnackbar(true);}
@@ -50,4 +55,4 @@ const Navbar = ({level, setLevel, format, setFormat}) => {
     )
 }
 
-export default Navbar
+export default withStyles(styles)(Navbar)
