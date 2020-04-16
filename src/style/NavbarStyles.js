@@ -1,4 +1,6 @@
-export default {
+import mediaQueries from './mediaQueries'
+
+export default ()=> ({
     Navbar: {
         display: "flex",
         alignItems: "center",
@@ -17,6 +19,9 @@ export default {
         "& a":  {
             textDecoration: "none",
             color: "black"
+        },
+        [mediaQueries.down("xs")]:{
+            display:"none"
         }
     },
     selectContainer :{
@@ -42,7 +47,10 @@ export default {
             height: "13px",
             marginLeft: "-7px",
             marginTop: "-3px"
+        },
+        [mediaQueries.down("m")]:{
+            width: "150px"
         }
     }
 
-}
+})

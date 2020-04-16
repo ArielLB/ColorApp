@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import ColorBox from './ColorBox'
 import Navbar from './Navbar'
 import PaletteFooter from './PaletteFooter';
-import {withStyles} from '@material-ui/styles'
+import {makeStyles} from '@material-ui/core/styles'
 import styles from '../style/PaletteStyles'
 
 
-const SingleColorPalette = ({palette,colorId,classes}) => {
+const SingleColorPalette = ({palette,colorId}) => {
 
+    const classes = makeStyles(styles)();
     const [format,setFormat] = useState('hex');
     const {paletteName , emoji, id} = palette;
     
@@ -40,4 +41,4 @@ const SingleColorPalette = ({palette,colorId,classes}) => {
     )
 }
 
-export default withStyles(styles)(SingleColorPalette)
+export default SingleColorPalette

@@ -1,4 +1,4 @@
-export default {
+export default ()=> ({
 
 paletteFooter: {
     backgroundColor: "white",
@@ -13,4 +13,4 @@ Emoji : {
     margin: "0 1rem"
 }
 
-}
+})

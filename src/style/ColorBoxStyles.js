@@ -1,10 +1,11 @@
 import chroma from 'chroma-js'
+import mediaQueries from './mediaQueries'
 
-export default {
+export default ({showingFullPalette,background}) => ({
 
     colorBox : {
         width: "20%",
-        height: props => props.showingFullPalette ? '25%' : '50%',
+        height: showingFullPalette ? '25%' : '50%',
         margin: "0 auto",
         display: "inline-block",
         position: "relative",
@@ -13,13 +14,26 @@ export default {
         "&:hover button": {
             opacity: 1,
             transition: "0.5s"
+        },
+        [mediaQueries.down("l")]:{
+            width: "25%",
+            height: showingFullPalette ? '20%' : '33.3333%'
+        },
+        [mediaQueries.down("m")]: {
+            width: "50%",
+            height: showingFullPalette ? '10%' : '20%'
+        },
+        [mediaQueries.down("s")]: {
+            width: "100%",
+            height: showingFullPalette ? '5%' : '10%'
         }
+
     },
     copyText : {
-        color: props => chroma(props.background).luminance() >= 0.7 ? 'black' : 'white'
+        color: chroma(background).luminance() >= 0.7 ? 'black' : 'white'
     },
     colorName : {
-        color: props => chroma(props.background).luminance() <= 0.08 ? 'white' : 'black'
+        color: chroma(background).luminance() <= 0.08 ? 'white' : 'black'
     },
     seeMore: {
         background: "rgba(255, 255, 255, 0.3)",
@@ -27,7 +41,7 @@ export default {
         border: "none",
         right: "0px",
         bottom: "0px",
-        color: props => chroma(props.background).luminance() >= 0.7 ? 'rgba(0,0,0,0.7)' : 'white',
+        color: chroma(background).luminance() >= 0.7 ? 'rgba(0,0,0,0.7)' : 'white',
         width: "60px",
         height: "30px",
         textAlign: "center",
@@ -48,7 +62,7 @@ export default {
         background: "rgba(255, 255, 255, 0.3)",
         fontSize: "1rem",
         lineHeight: "30px",
-        color: props => chroma(props.background).luminance() >= 0.7 ? 'rgba(0,0,0,0.7)' : 'white',
+        color: chroma(background).luminance() >= 0.7 ? 'rgba(0,0,0,0.7)' : 'white',
         textTransform: "uppercase",
         border: "none",
         textDecoration: "none",
@@ -102,7 +116,10 @@ export default {
             textAlign: "center",
             marginBottom: 0,
             padding: "1rem",
-            textTransform: "uppercase"
+            textTransform: "uppercase",
+            [mediaQueries.down("xs")]:{
+                fontSize: "6rem"
+            }
         },
         "& p": {
             fontSize: "2rem",
@@ -116,4 +133,4 @@ export default {
         transition: "all 0.4s ease-in-out",
         transitionDelay: "0.3s"
     }
-}
+})

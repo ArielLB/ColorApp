@@ -11,65 +11,12 @@ import DraggableColorList from './DraggableColorList'
 import {arrayMove} from 'react-sortable-hoc'
 import PaletteFormNav from './PaletteFormNav'
 import ColorPickerForm from './ColorPickerForm'
+import styles from '../style/NewPaletteFormStyles'
+import seedColors from '../seedColors'
 
-
-const drawerWidth = 400;
-const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-      display: "flex",
-      alignItems: "center"
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-    content: {
-      flexGrow: 1,
-      height: "calc(100vh - 64px)",//64 is the navbar 
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    },
-    buttons:{
-      width:"100%"
-    },
-    button:{
-      width:"50%"
-    },
-    drewerContainer:{
-        width: "90%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100%"
-    }
-  }));
 
 const NewPaletteForm = ({savePalette,palettes,history,maxColors=20}) => {
-    const classes = useStyles();
+    const classes = makeStyles(styles)();
     const [open, setOpen] = React.useState(false);
     const [currentColor,setCurrentColor] = React.useState('teal');
     const [colorsArray,setColorsArray] = React.useState([]);
@@ -81,7 +28,6 @@ const NewPaletteForm = ({savePalette,palettes,history,maxColors=20}) => {
       setOpen(false);
     };
 
-   
 
     function deleteColor(colorName){
         setColorsArray(colorsArray.filter(color => color.name !== colorName))
@@ -95,10 +41,18 @@ const NewPaletteForm = ({savePalette,palettes,history,maxColors=20}) => {
       setColorsArray([]);
     }
 
-    function randomColor(){
-      const allColors = palettes.map(p => p.colors).flat();
-      var rand = Math.floor(Math.random() * allColors.length);
-      setColorsArray([...colorsArray,allColors[rand]])
+    function addRandomColor(){
+      let emptyData = (!palettes || palettes.length === 0) ? true : false 
+      const allColors = emptyData ? seedColors.map(p => p.colors).flat() : palettes.map(p => p.colors).flat(); 
+      let rand;
+      let randomColor;
+      let found = true;
+      while(found){
+        rand = Math.floor(Math.random() * allColors.length);
+        randomColor = allColors[rand];
+        found = allColors.includes(randomColor.name)
+      }
+      setColorsArray([...colorsArray,randomColor])
     }
 
     return (
@@ -136,7 +90,7 @@ const NewPaletteForm = ({savePalette,palettes,history,maxColors=20}) => {
              <Button className={classes.button} 
                      variant='contained' 
                      color='primary' 
-                     onClick={randomColor} 
+                     onClick={addRandomColor} 
                      disabled={isPaletteFull}>Random Color</Button>
           </div>
           <ColorPickerForm currentColor={currentColor} 
@@ -156,7 +110,8 @@ const NewPaletteForm = ({savePalette,palettes,history,maxColors=20}) => {
               <DraggableColorList 
                   colorsArray={colorsArray} 
                   deleteColor={deleteColor} 
-                  axis="xy" 
+                  axis="xy"
+                  distance={20} 
                   onSortEnd={onSortEnd}/>
         </main>
       </div>

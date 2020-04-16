@@ -6,13 +6,14 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 import { IconButton } from '@material-ui/core'
-import {withStyles} from '@material-ui/styles'
+import {makeStyles} from '@material-ui/core/styles'
 import styles from '../style/NavbarStyles'
 import 'rc-slider/assets/index.css'
 
 
+const Navbar = ({level, setLevel, format, setFormat, hideLevel}) => {
 
-const Navbar = ({level, setLevel, format, setFormat, hideLevel,classes}) => {
+    const classes = makeStyles(styles)();
     const [openSnackbar,setOpenSnackbar] = useState(false);
     return (
         <header className={classes.Navbar}>
@@ -55,4 +56,4 @@ const Navbar = ({level, setLevel, format, setFormat, hideLevel,classes}) => {
     )
 }
 
-export default withStyles(styles)(Navbar)
+export default Navbar

@@ -1,13 +1,14 @@
-export default {
-    root: {//this is a unique 'main' class name - if theres is main anywhere else its nit the same
+export default () => ({
+    root: {//this is a unique 'main' class name - if theres is main anywhere else its not the same
         backgroundColor: 'white',
         border: '1px solid black',
         borderRadius: '5px',
         padding: "0.5rem",
         position: 'relative',
         overflow: 'hidden',
-        '&:hover': {
-            cursor: 'pointer'
+        cursor: "pointer",
+        '&:hover svg': {
+            opacity: 1
         }
     },
     colors: {
@@ -38,5 +39,18 @@ export default {
         margin: '0 auto',
         position: 'relative',
         marginBottom: '-3.5px'
+    },
+    deleteIcon:{
+        color: 'white',
+        backgroundColor:"#eb3d30",
+        width: "20px",
+        height: "20px",
+        position: "absolute",
+        right: "0px",
+        top: "0px",
+        padding: "10px",
+        zIndex: 10,
+        opacity: 0,
+        transition: "all 0.4s ease-in-out !important"
     }
-}
+})
